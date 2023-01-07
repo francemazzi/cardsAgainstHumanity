@@ -1,4 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Welcome! Thi is card agains Humanity
+
+You can find the website here -> https://www.cardsagainsthumanity.com/
+
+I love to play at this game so I decide to create before the end of may (my birthday) an online versione to play online with my friends!
+
+## Rules
+
+To start the game, each player draws ten white cards. The player who most recently pooped begins as the Card Czar and draws a black card. If Hugh Jackman is playing, he goes first, regardless of how recently he pooped. The Card Czar reads the question or fill-in-the-blank phrase on the black card out loud. Everyone else answers the question or fills in the blank by passing one white card, face down, to the Card Czar. The Card Czar then shuffles all the answers and reads each card combination out loud to the group. The Card Czar should re-read the black card before presenting each answer. Finally, the Card Czar picks the funniest play, and whoever submitted it gets one point. After the round, a new player becomes the Card Czar and everyone draws back up to ten white cards.
+
+'PICK 2'... TWO WORDS in BLACK CARD: Some black cards say “PICK 2” on the bottom. To answer these, each player plays two white cards in combination. IMPORTANT: Arrange them in the order that the Card Czar should read them—play the first card face down, and then play the second card face down on top of it.
+
+'GAMBLING' ... If you have more than one white card that you think could win a round, you can bet one of your points to play an extra white card. If you win, you keep the point. If you lose, whoever wins gets the point you wagered.
+
+## TO DO dev
+
+1. Sviluppo componenti: carte, categorie, pacchetti disponibili
+2. Sviluppo iscrizione decentralizzata WAGMY o google con firebase
+3. Creazione gruppi di gioco
+4. Creazione lettore black card (poi in ordine il lettore passerà da un utente all'altro) e 'divisione mazzi'
+5. Visione mazzo 10 carte, selezione carta da dare a lettore, ripescaggio carta (per averne sempre 10)
+6. Selezione carta più ridicola
+7. Assegnazione punti (collezione black card alla persone che ha vinto)
+8. Versione con traduzione italiana delle carte
 
 ## Getting Started
 
