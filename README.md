@@ -1,4 +1,4 @@
-## Welcome! Thi is card agains Humanity
+## Welcome! This is cards against Humanity
 
 You can find the website here -> https://www.cardsagainsthumanity.com/
 
