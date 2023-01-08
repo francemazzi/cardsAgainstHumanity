@@ -14,38 +14,28 @@ type Props = {
     }[];
     official: boolean;
   }[];
+  color: boolean;
 };
-// TODO: Create components white card
 
-function CardList({ card }: Props) {
+function CardList({ card, color }: Props) {
   return (
     <div className="flex flex-wrap justify-center p-2">
-      {/* WHITE CARDS */}
       {card.map((data) => {
-        return data.white.map((cards, id) => {
+        return (color ? data.white : data.black).map((cards, id) => {
           let i = 1;
           return (
+            // CARD component
             <div
               key={id}
-              className="flex flex-col justify-center items-center m-2  h-[14rem] w-[10rem] md:h-[30rem] md:w-[20rem] lg:h-[30rem] lg:w-[20rem] bg-[white] cursor-pointer overflow-hidden shadow-lg rounded-md hover:scale-105 transition-all duration-150 aese-out shadow-cyan-500/50"
+              className={`flex flex-col justify-center items-center m-2  h-[14rem] w-[10rem] md:h-[30rem] md:w-[20rem] lg:h-[30rem] lg:w-[20rem] bg-[${
+                color ? "white" : "black"
+              }] cursor-pointer overflow-hidden shadow-lg rounded-md hover:scale-105 transition-all duration-150 aese-out shadow-cyan-500/50`}
             >
-              <p className="text-[black] font-bold p-2 text-center text-[15px] lg:text-[25px]">
-                {cards.text}
-              </p>
-            </div>
-          );
-        });
-      })}
-      {/* black CARDS */}
-      {card.map((data) => {
-        return data.black.map((cards, id) => {
-          let i = 1;
-          return (
-            <div
-              key={id}
-              className="flex flex-col justify-center items-center m-2  h-[14rem] w-[10rem] md:h-[30rem] md:w-[20rem] lg:h-[30rem] lg:w-[20rem] bg-[black] cursor-pointer overflow-hidden shadow-lg rounded-md hover:scale-105 transition-all duration-150 aese-out shadow-white"
-            >
-              <p className="text-[white] font-bold p-2 text-center text-[15px] lg:text-[25px]">
+              <p
+                className={`text-[${
+                  color ? "black" : "white"
+                }] font-bold p-2 text-center text-[15px] lg:text-[25px]`}
+              >
                 {cards.text}
               </p>
             </div>
