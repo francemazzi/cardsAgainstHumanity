@@ -1,6 +1,6 @@
 export interface cardB {
   text: string;
-  pick: number;
+  pick?: number;
   pack: number;
 }
 export interface cardW {

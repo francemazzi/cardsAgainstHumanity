@@ -15,9 +15,35 @@ interface randomCardInterface {
   };
 }
 
+//TODO:
+//estrazione carte randomica -> 10 carte bianche - 1 carta nera
+//eliminazione dal mazzo di carte -> eliminaizone 10 carte bianche - 1 carta nera
+//implementare UI con react beautiful dnd
+
 const blackCards = CardDesk[0].black;
 const whiteCards = CardDesk[0].white;
 
+//CREAZIONE MAZZO DI CARTE
+const deckCreation = (deck: cardW[] | cardB[], numberCardInDeck: number) => {
+  const result: cardW[] | cardB[] = [];
+  if (numberCardInDeck >= deck.length) {
+    deck.push(...deck.sort(() => Math.random() - 0.5));
+  } else {
+    const indices = new Set<number>();
+    while (indices.size < numberCardInDeck) {
+      indices.add(Math.floor(Math.random() * deck.length));
+    }
+    indices.forEach((index) => {
+      result.push(deck[index]);
+    });
+  }
+  return result;
+};
+
+const whiteDeck = deckCreation(whiteCards, 150);
+const blackDeck = deckCreation(blackCards, 50);
+
+//ESTRAZIONE SINGOLA carte
 const randomiCard = (cardBlack: cardB[], cardWhite: cardW[]) => {
   const newWhiteArr = [];
   const randomBCard = cardBlack[Math.floor(Math.random() * cardBlack.length)];
@@ -31,7 +57,7 @@ const randomiCard = (cardBlack: cardB[], cardWhite: cardW[]) => {
     B: { card: randomBCard, color: "black" },
     W: { cards: newWhiteArr, color: "white" },
   };
-
+  console.log(dataCards);
   return dataCards;
 };
 
@@ -107,4 +133,3 @@ function PlayOne() {
 }
 
 export default PlayOne;
-//<Card text={randomcards.B.card.text} color={randomcards.B.color} />
