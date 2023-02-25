@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react";
 import CardDesk from "../commons/cardsDeks.json";
 import { cardW, cardB } from "../commons/types";
 import Card from "../components/atoms/Card";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 
 interface randomCardInterface {
   B: {
     card: cardB;
     color: string;
+    id?: string;
   };
   W: {
     cards: cardW[];
     color: string;
+    id?: string;
   };
 }
 
@@ -66,13 +73,13 @@ export const useStrictDroppable = (loading: boolean) => {
 
 //FUNZIONE CREAZIONE ID RANDOMICO di 6 lettere
 export function generateRandomId(): string {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const characters = "123456789";
   let id = "";
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 10; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     id += characters[randomIndex];
   }
+
   return id;
 }
 
@@ -107,6 +114,7 @@ const deckCreation = (deck: cardW[] | cardB[], numberCardInDeck: number) => {
   return result;
 };
 
+//DECKS ready to use
 const whiteDeck = deckCreation(whiteCards, 20);
 const blackDeck = deckCreation(blackCards, 50);
 
@@ -128,24 +136,31 @@ const randomiCard = (cardBlack: cardB[], cardWhite: cardW[]) => {
   return dataCards;
 };
 
-const selectCard = (e: any) => {
-  console.log("e");
-};
-
 function PlayOne() {
   const [enabled] = useStrictDroppable(false);
-  const [randomicCards, setRandomicCards] = useState<randomCardInterface>();
 
-  useEffect(() => {
-    const randomcards = randomiCard(blackCards, whiteCards);
-    setRandomicCards(randomcards);
-  }, []);
+  //mano di gioco
+  const [randomicCards, setRandomicCards] = useState<randomCardInterface>(
+    randomiCard(blackDeck, whiteDeck)
+  );
+  //randomic card for white
+  const [drag, setDrag] = useState(randomicCards.W.cards);
 
-  const [select, setSelect] = useState();
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    if (!destination) return;
 
-  const onDragEnd = () => {
-    console.log("onDragEnd");
+    const items = Array.from(drag);
+    const [newOrder] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, newOrder);
+    setDrag(items);
   };
+
+  //define when cards change
+  // useEffect(() => {
+  //   const randomcards = randomiCard(blackCards, whiteCards);
+  //   setRandomicCards(randomcards);
+  // }, []);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -154,7 +169,7 @@ function PlayOne() {
           Gioca umano!
         </h1>
         {enabled && (
-          <Droppable droppableId="characters">
+          <Droppable droppableId="dark">
             {(provided) => (
               <div
                 {...provided.droppableProps}
@@ -173,16 +188,20 @@ function PlayOne() {
           Scegli dal tuo mazzo e fammi ridere
         </h1>
         {enabled && (
-          <Droppable droppableId="characters">
+          <Droppable droppableId="white">
             {(provided) => (
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className="flex flex-row items-center  justify-start overflow-x-scroll shadow-md"
+                className="flex  flex-row items-center justify-start overflow-x-scroll shadow-md"
               >
-                {randomicCards?.W.cards.map((data, idk) => {
+                {drag.map((data, index) => {
                   return (
-                    <Draggable draggableId={data.text} index={idk} key={idk}>
+                    <Draggable
+                      draggableId={data.text}
+                      index={index}
+                      key={data.id}
+                    >
                       {(provided) => (
                         <div
                           ref={provided.innerRef}
@@ -192,12 +211,14 @@ function PlayOne() {
                           <Card
                             text={data.text}
                             color={randomicCards?.W.color}
-                            // onClick={selectCard}
                           />
                         </div>
                       )}
                     </Draggable>
                   );
+                  {
+                    provided.placeholder;
+                  }
                 })}
               </div>
             )}
