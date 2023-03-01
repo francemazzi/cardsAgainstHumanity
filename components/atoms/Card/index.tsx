@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   text?: string;
@@ -7,7 +7,7 @@ type Props = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   deselect?: () => void;
   select?: boolean;
-  IdData?: string;
+  IdData?: any;
 };
 
 const Card: React.FC<Props> = ({
@@ -19,6 +19,11 @@ const Card: React.FC<Props> = ({
   IdData,
   deselect,
 }) => {
+  const [dataObj, setDataObj] = useState();
+  useEffect(() => {
+    if (select) setDataObj(IdData);
+  }, []);
+  // console.log("dataObj", dataObj);
   return (
     <div className="flex flex-col items-center">
       <button
@@ -34,19 +39,6 @@ const Card: React.FC<Props> = ({
           {text}
         </p>
       </button>
-      {select ? (
-        <div className="flex flex-row w-full items-center justify-around">
-          {/* <button className="h-[40px] w-[40px] bg-white rounded-full">+</button> */}
-          <button
-            className="p-2 w-full mx-4 mt-2 bg-white rounded-full"
-            onClick={deselect}
-          >
-            Deselect
-          </button>
-        </div>
-      ) : (
-        ""
-      )}
     </div>
   );
 };

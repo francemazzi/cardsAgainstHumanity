@@ -162,16 +162,30 @@ function PlayOne() {
                 color={randomicCards?.W.color}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                   if (e.currentTarget.id === index.toString()) {
-                    console.log(data);
+                    console.log(e.currentTarget.id);
                     setSelectedObj(data);
                     setIdData(e.currentTarget.id);
                     setSelect(true);
                   }
                 }}
-                deselect={() => {
-                  setSelect(false);
-                }}
               />
+              <div>
+                {select && idData === index.toString() ? (
+                  <div className="flex flex-row w-full items-center justify-around">
+                    {/* <button className="h-[40px] w-[40px] bg-white rounded-full">+</button> */}
+                    <button
+                      className="p-2 w-full mx-4 mt-2 bg-white rounded-full"
+                      onClick={() => {
+                        setSelect(false);
+                      }}
+                    >
+                      Deselect
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           );
         })}
