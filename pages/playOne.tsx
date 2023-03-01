@@ -38,7 +38,8 @@ interface blackCardInterface {
 interface whiteCardInterface {
   id: string;
   cards: cardW;
-  color: string;
+  color?: string;
+  pack?: number;
 }
 
 //TODO:
@@ -111,9 +112,14 @@ const randomiCard = (cardBlack: cardB[], cardWhite: cardW[]) => {
   return dataCards;
 };
 
+// TODO: doppio select se hanno due _ quindi seleziona due carte -> fare una funzione che analizza test
+
 function PlayOne() {
   //mano di gioco
   const [randomicCards, setRandomicCards] = useState<randomCardInterface>();
+  const [select, setSelect] = useState(false);
+  const [idData, setIdData] = useState("");
+  const [selectedObj, setSelectedObj] = useState<whiteCardInterface | any>();
 
   // define when cards change
   useEffect(() => {
@@ -132,6 +138,12 @@ function PlayOne() {
           text={randomicCards?.B.card.text}
           color={randomicCards?.B.color}
         />
+
+        {select ? (
+          <Card color={randomicCards?.W.color} text={selectedObj?.text} />
+        ) : (
+          ""
+        )}
       </div>
 
       <h1 className="text-[20px] font-bold w-full text-center text-[white] p-2">
@@ -142,7 +154,24 @@ function PlayOne() {
         {randomicCards?.W.cards.map((data, index) => {
           return (
             <div key={index}>
-              <Card text={data.text} color={randomicCards?.W.color} />
+              <Card
+                cardNumber={index}
+                select={select}
+                text={data.text}
+                IdData={idData}
+                color={randomicCards?.W.color}
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  if (e.currentTarget.id === index.toString()) {
+                    console.log(data);
+                    setSelectedObj(data);
+                    setIdData(e.currentTarget.id);
+                    setSelect(true);
+                  }
+                }}
+                deselect={() => {
+                  setSelect(false);
+                }}
+              />
             </div>
           );
         })}
